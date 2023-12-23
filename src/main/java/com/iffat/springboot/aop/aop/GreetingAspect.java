@@ -1,6 +1,7 @@
 package com.iffat.springboot.aop.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,5 +41,22 @@ public class GreetingAspect {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AfterThrowing: Method: {}, args: {}", method, args);
+    }
+
+    @Around("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    public Object loggerAround(ProceedingJoinPoint joinPoint) throws Throwable {
+        String method = joinPoint.getSignature().getName();
+        String args = Arrays.toString(joinPoint.getArgs());
+
+        Object result = null;
+        try {
+            logger.info("around: Method: {}, args: {}", method, args);
+            result = joinPoint.proceed();
+            logger.info("around: Method: {}, result: {}", method, result);
+            return result;
+        } catch (Throwable e) {
+            logger.info("around throwable: Method: {}", method);
+            throw e;
+        }
     }
 }
