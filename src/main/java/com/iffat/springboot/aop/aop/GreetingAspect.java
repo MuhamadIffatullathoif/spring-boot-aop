@@ -17,38 +17,35 @@ public class GreetingAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Pointcut("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
-    private void greetingLoggerPointCut(){}
-
-    @Before("greetingLoggerPointCut()")
+    @Before("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("before: Method: {}, args: {}", method, args);
     }
 
-    @After("greetingLoggerPointCut()")
+    @After("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerAfter(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("After: Method: {}, args: {}", method, args);
     }
 
-    @AfterReturning("greetingLoggerPointCut()")
+    @AfterReturning("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerAfterReturning(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AfterReturning : Method: {}, args: {}", method, args);
     }
 
-    @AfterThrowing("greetingLoggerPointCut()")
+    @AfterThrowing("GreetingServicePointCuts.greetingLoggerPointCut()")
     public void loggerAfterThrowing(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AfterThrowing: Method: {}, args: {}", method, args);
     }
 
-    @Around("greetingLoggerPointCut()")
+    @Around("GreetingServicePointCuts.greetingLoggerPointCut()")
     public Object loggerAround(ProceedingJoinPoint joinPoint) throws Throwable {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
