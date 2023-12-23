@@ -17,35 +17,38 @@ public class GreetingAspect {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Before("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    @Pointcut("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    private void greetingLoggerPointCut(){}
+
+    @Before("greetingLoggerPointCut()")
     public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("before: Method: {}, args: {}", method, args);
     }
 
-    @After("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    @After("greetingLoggerPointCut()")
     public void loggerAfter(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("After: Method: {}, args: {}", method, args);
     }
 
-    @AfterReturning("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    @AfterReturning("greetingLoggerPointCut()")
     public void loggerAfterReturning(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AfterReturning : Method: {}, args: {}", method, args);
     }
 
-    @AfterThrowing("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    @AfterThrowing("greetingLoggerPointCut()")
     public void loggerAfterThrowing(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
         logger.info("AfterThrowing: Method: {}, args: {}", method, args);
     }
 
-    @Around("execution(String com.iffat.springboot.aop.services.GreetingService.*(..))")
+    @Around("greetingLoggerPointCut()")
     public Object loggerAround(ProceedingJoinPoint joinPoint) throws Throwable {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
