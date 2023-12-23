@@ -1,6 +1,7 @@
 package com.iffat.springboot.aop.aop;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -19,6 +20,13 @@ public class GreetingAspect {
     public void loggerBefore(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().getName();
         String args = Arrays.toString(joinPoint.getArgs());
-        logger.info("Method: {}, args: {}", method, args);
+        logger.info("before: Method: {}, args: {}", method, args);
+    }
+
+    @After("execution(String com.iffat.springboot.aop.services.GreetingService.sayHello(..))")
+    public void loggerAfter(JoinPoint joinPoint) {
+        String method = joinPoint.getSignature().getName();
+        String args = Arrays.toString(joinPoint.getArgs());
+        logger.info("After: Method: {}, args: {}", method, args);
     }
 }
